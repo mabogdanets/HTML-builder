@@ -1,0 +1,115 @@
+html, body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #25282A;
+  }
+
+.page {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 40px;
+  }
+
+.slider {
+  position: relative;
+  background: #25282A;
+  }
+
+.slider__input {
+  display: none;
+  }
+
+.slider__inner {
+  overflow: hidden;
+ 
+  border-radius: 8px;
+  }
+
+.slider__slides {
+  width: 400%;
+  transition: transform 0.8s ease;
+  }
+.slider__quotes {
+  padding-top: 2rem;
+  display:flex;
+  width: 400%;
+  transition: transform 0.8s ease;
+}
+.slider__quote {
+  width: 25%;
+  color: #fff;
+}
+.slider__img {
+  float: left;
+  width: 25%;
+  height: 376px;
+  object-fit: cover;
+  }
+
+.slider__controls {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: -40px;
+  z-index: 100;
+  text-align: right;
+  }
+
+.slider__label {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  position: relative;
+  font-size: 0;
+  cursor: pointer;
+  }
+
+.slider__label:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 6px;
+  height: 6px;
+  background: #71ABFF;
+  cursor: pointer;
+  border: 1px solid #71ABFF;
+  border-radius: 50%;
+  box-shadow: 0 0 2px rgba(0,0,0,.8);
+  transition: background-color .2s, border-color .2s;
+  }
+
+.slider__label:hover:before {
+  background: #fff;
+  border-color: #fff;
+  }
+
+#btn-1:checked ~ .slider__controls .slider__label[for="btn-1"]:before,
+#btn-2:checked ~ .slider__controls .slider__label[for="btn-2"]:before,
+#btn-3:checked ~ .slider__controls .slider__label[for="btn-3"]:before,
+#btn-4:checked ~ .slider__controls .slider__label[for="btn-4"]:before {
+    background-color: transparent;
+    }
+
+#btn-1:checked ~ .slider__inner .slider__slides,
+#btn-1:checked ~ .slider__inner .slider__quotes {
+    transform: translate(0);
+    }
+
+#btn-2:checked ~ .slider__inner .slider__slides,
+#btn-2:checked ~ .slider__inner .slider__quotes  {
+    transform: translate(-25%);
+    }
+
+#btn-3:checked ~ .slider__inner .slider__slides,
+#btn-3:checked ~ .slider__inner .slider__quotes  {
+    transform: translate(-50%);
+    }
+
+#btn-4:checked ~ .slider__inner .slider__slides,
+#btn-4:checked ~ .slider__inner .slider__quotes  {
+    transform: translate(-75%);
+    }
+
