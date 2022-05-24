@@ -16,7 +16,19 @@ const fsProm = require('fs/promises');
 let readSrteam = fs.createReadStream(path.join(__dirname, 'template.html'), 'utf-8');
 let template = '';
 
-
+function copyDirRecursive(dir) {
+  return fsProm.mkdir(path.join(__dirname, 'project-dist', dir), {recursive: true})
+    .then(() => fsProm.readdir(path.join(__dirname, dir), {withFileTypes: true}))
+    .then((files) => {
+      return Promise.all(files.map((file) => {
+        if (file.isFile()) {
+          return fsProm.copyFile(path.join(__dirname, dir, file.name), path.join(__dirname, 'project-dist', dir, file.name));
+        } else {
+          return copyDirRecursive(path.join(dir, file.name));
+        }
+      }));
+    });
+}
 
 new Promise((resolve, reject) => {
   readSrteam.on('data', chunk => template += chunk);
@@ -80,19 +92,7 @@ new Promise((resolve, reject) => {
       return (file.isFile() && path.extname(file.name) === '.css') ? true : false; 
     }
 
-    fsProm.readdir(path.join(__dirname,'project-dist', 'assets'), {withFileTypes: true})
-      .then((files) => {
-        return Promise.all(files.map((file) => {
-          return fsProm.rm(path.join(__dirname, 'project-dist', 'assets', file.name), {force: true});
-        }));
-      })
-      .then(() => fsProm.readdir(path.join(__dirname, 'assets'), {withFileTypes: true}))
-      .then((files) => {
-        return Promise.all(files.map((file) => {
-          return fsProm.copyFile(path.join(__dirname, 'files', file.name), path.join(__dirname, 'files-copy', file.name));
-        }));
-      })
-      .then(() => {
-        console.log('Copying completed');
-      });
+    fsProm.rm(path.join(__dirname, 'project-dist', 'assets'), {recursive: true, force: true})
+      .then(() => copyDirRecursive('assets'));
+
   });
