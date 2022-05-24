@@ -15,7 +15,7 @@ stdout.write('Введите что-нибудь: \n');
 
 rl.on('line', (input) => {
   if(input === 'exit') {
-    stdout.write('Досвидания!'),
+    stdout.write('До свидания!'),
     rl.close();
   } else {
     writeStream.write(`${input}\n`);
@@ -23,6 +23,6 @@ rl.on('line', (input) => {
 });
 
 rl.on('SIGINT', () =>{
-  stdout.write('Досвидания!'),
+  stdout.write('До свидания!'),
   rl.close();
 });
